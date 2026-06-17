@@ -286,7 +286,39 @@
 
 </div>
 
+<script>
 
+    document
+        .getElementById('diagnosisForm')
+        .addEventListener('submit', function(e){
+
+            e.preventDefault();
+
+            const symptoms = [];
+
+            document
+                .querySelectorAll('.symptom:checked')
+                .forEach(cb => symptoms.push(cb.value));
+
+            const payload = {
+                age: document.getElementById('age').value,
+                gender: document.getElementById('gender').value,
+                severity: document.getElementById('severity').value,
+                symptoms,
+                duration: document.getElementById('duration').value,
+                conditions: document.getElementById('conditions').value,
+                medications: document.getElementById('medications').value,
+                notes: document.getElementById('notes').value
+            };
+
+            console.log(payload);
+
+            document
+                .getElementById('resultsSection')
+                .style.display = 'block';
+        });
+
+</script>
 
 </body>
 </html>
