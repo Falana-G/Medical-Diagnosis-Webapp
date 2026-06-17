@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const indexController = require('./controller/index.controller');
@@ -13,6 +14,15 @@ app.get('/', (req, res) =>{
     res.render('home');
 });
 
+app.post('/analyze', async (req, res) => {
+
+    console.log(req.body);
+
+    res.json({
+        success: true
+    });
+
+});
 
 app.listen(port, (error)=>{
     if (error){
