@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const indexController = require('./controller/index.controller');
+const { analyzePatient } = require('./services/geminiservices');
 
 let port = 18455;
 
@@ -15,14 +16,21 @@ app.get('/', (req, res) =>{
 });
 
 app.post('/analyze', async (req, res) => {
-
-    console.log(req.body);
-
-    res.json({
-        success: true
-    });
-
+    try {
+        const result = await analyzePatient(req.body);
+        res.json({
+            success: true,
+            result
+        });
+    } catch(err){
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            message: 'Analysis failed'
+        });
+    }
 });
+
 
 app.listen(port, (error)=>{
     if (error){
