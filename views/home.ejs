@@ -284,9 +284,7 @@
 
 <script>
 
-    async function analyzeData(e){
-
-            e.preventDefault();
+    async function analyzeData(){
 
             const symptoms = [];
 
@@ -316,6 +314,67 @@
         const data = await response.json();
 
         console.log(data);
+
+        const result = data.result;
+
+        let conditionsHTML = '';
+
+        result.possibleConditions.forEach(condition => {
+
+            conditionsHTML += `
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5>${condition.name}</h5>
+
+                <span class="badge bg-primary">
+                    ${condition.confidence}
+                </span>
+
+                <p class="mt-2">
+                    ${condition.reason}
+                </p>
+            </div>
+        </div>
+    `;
+        });
+
+
+        let redFlagsHTML = '';
+
+        result.redFlags.forEach(flag => {
+
+            redFlagsHTML += `
+        <li>${flag}</li>
+    `;
+        });
+
+
+        document.getElementById('resultsContent').innerHTML = `
+
+    <h4>Possible Conditions</h4>
+
+    ${conditionsHTML}
+
+    <hr>
+
+    <h4>Urgency</h4>
+
+    <div class="alert alert-warning">
+        ${result.urgency}
+    </div>
+
+    <h4>Recommended Specialist</h4>
+
+    <div class="alert alert-info">
+        ${result.specialist}
+    </div>
+
+    <h4>Red Flags</h4>
+
+    <ul>
+        ${redFlagsHTML}
+    </ul>
+`;
 
             document
                 .getElementById('resultsSection')

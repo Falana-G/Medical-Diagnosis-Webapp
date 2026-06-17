@@ -25,7 +25,9 @@ app.post('/analyze', async (req, res) => {
             result
         });
     } catch(err){
-        console.error(err);
+            console.error("FULL ERROR:");
+            console.error(err);
+            console.error(err.message);
         res.status(500).json({
             success: false,
             message: 'Analysis failed'

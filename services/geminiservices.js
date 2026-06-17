@@ -41,7 +41,12 @@ Return format:
         contents: prompt
     });
 
-    return response.text;
+    const cleaned = response.text
+        .replace(/```json/g, '')
+        .replace(/```/g, '')
+        .trim();
+
+    return JSON.parse(cleaned);
 }
 
 module.exports = {
