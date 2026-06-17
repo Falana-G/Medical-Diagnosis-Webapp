@@ -4,9 +4,14 @@ const indexController = require('./controller/index.controller');
 
 let port = 18455;
 
-app.use(express.json());
 app.use(express.static('public'));
+app.set('view engine', 'ejs');
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.get('/', (req, res) =>{
+    res.render('home');
+});
 
 
 app.listen(port, (error)=>{
